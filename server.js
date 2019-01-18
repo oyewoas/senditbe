@@ -6,13 +6,13 @@ import cors from 'cors';
 // import YAML from 'yamljs';
 // import path from 'path';
 // import router from './app/routes';
-// import createTables from './app/db/db';
+import { createTables } from './app/db/db'; 
 
 const PORT = process.env.PORT || 4000;
 
 // const swaggerDocument = YAML.load(path.join(process.cwd(), './swagger/swagger.yaml'));
 
-// createTables();
+createTables();
 dotenv.config();
 
 // create express app
