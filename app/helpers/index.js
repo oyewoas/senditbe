@@ -8,7 +8,7 @@ import jwt from 'jsonwebtoken';
    */
 const saltRounds = 10;
 const salt = bcrypt.genSaltSync(saltRounds);
-const hashPassword = (password) => { bcrypt.hashSync(password, salt); };
+const hashPassword = (password) => { return bcrypt.hashSync(password, salt); };
 
 /**
    * comparePassword
@@ -16,8 +16,8 @@ const hashPassword = (password) => { bcrypt.hashSync(password, salt); };
    * @param {string} password 
    * @returns {Boolean} return True or False
    */
-const comparePassword = (hashedPassword, password) => { 
-  bcrypt.compareSync(password, hashedPassword); 
+const comparePassword = (hashedPassword, password) => {
+  return bcrypt.compareSync(password, hashedPassword);
 };
 
 /**
@@ -68,11 +68,11 @@ const generateToken = (email, id) => {
   return token;
 };
 
-export { 
-  hashPassword, 
-  comparePassword, 
-  isValidEmail, 
-  validatePassword, 
+export {
+  hashPassword,
+  comparePassword,
+  isValidEmail,
+  validatePassword,
   isEmpty,
   generateToken,
 };
