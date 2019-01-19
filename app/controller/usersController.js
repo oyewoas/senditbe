@@ -93,7 +93,7 @@ const loginUser = async (req, res) => {
     const { rows } = await dbQuery.query(loginUserQuery, [email]);
     const dbResponse = rows[0];
     if (!dbResponse) {
-      badRequest.description = 'The credentials you provided is incorrect';
+      badRequest.description = 'The credentials you provided is incorrect or this User does not exist';
       return res.status(400).send(badRequest);
     }
     if (!comparePassword(dbResponse.password, password)) {
@@ -125,11 +125,11 @@ const loginUser = async (req, res) => {
    */
 const deleteUser = async (req, res) => {
   // eslint-disable-next-line camelcase
-  const { userId } = req.user;
-  const deleteQuery = 'DELETE FROM users WHERE id=$1 returning *';
+  const { user_id } = req.user;
+  const deleteQuery = 'DELETE FROM users WHERE user_id=$1 returning *';
   try {
     // eslint-disable-next-line camelcase
-    const { rows } = await dbQuery.query(deleteQuery, [userId]);
+    const { rows } = await dbQuery.query(deleteQuery, [user_id]);
     const dbResponse = rows[0];
     if (!dbResponse) {
       notFound.description = 'User not found';

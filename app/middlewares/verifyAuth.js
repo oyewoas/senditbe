@@ -43,20 +43,22 @@ const verifyToken = async (req, res, next) => {
   }
   try {
     const decoded = await jwt.verify(token, process.env.JWT_KEY);
-    console.log(decoded);
-    const selectUser = 'SELECT * FROM users WHERE id = $1';
-    const { rows } = await dbQuery.query(selectUser, [decoded.user_id]);
+    const selectUser = 'SELECT * FROM users WHERE user_id = $1';
+    const { rows } = await dbQuery.query(selectUser, [decoded.userId]);
     const dbResponse = rows[0];
-    if(!dbResponse) {
+    if (!dbResponse) {
       badRequest.description = 'The token you provided is invalid';
       return res.status(400).send(badRequest);
     }
-    req.user = { userId: decoded.user_id };
+    req.user = { user_id: decoded.userId };
     next();
   } catch (error) {
-    return res.status(400).send(error);
+    return res.status(401).send({
+      status: '401',
+      message: 'Auth failed',
+      error,
+    });
   }
-  return res.status(404).send(notFound);
 };
 
 

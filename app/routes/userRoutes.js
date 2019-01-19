@@ -6,7 +6,7 @@ export default function route(app) {
 
   app.post('/api/v1/user/login', loginUser);
 
-  app.delete('/api/v1/users/me', verifyAuth, deleteUser);
+  app.delete('/api/v1/user/me', verifyAuth, deleteUser);
   
   // app.get('/api/v1/user/profile', verifyAuth, getProfile);
   
