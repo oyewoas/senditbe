@@ -21,9 +21,9 @@ const conflictExists = { status: '409', message: 'Conflict' };
 
 /**
    * Create A User
-   * @param {object} req 
+   * @param {object} req
    * @param {object} res
-   * @returns {object} reflection object 
+   * @returns {object} reflection object
    */
 const createUser = async (req, res) => {
   const { email, username, password } = req.body;
@@ -74,9 +74,9 @@ const createUser = async (req, res) => {
 
 /**
    * Login
-   * @param {object} req 
+   * @param {object} req
    * @param {object} res
-   * @returns {object} user object 
+   * @returns {object} user object
    */
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
@@ -119,15 +119,17 @@ const loginUser = async (req, res) => {
 
 /**
    * Delete A User
-   * @param {object} req 
-   * @param {object} res 
-   * @returns {void} return status code 204 
+   * @param {object} req
+   * @param {object} res
+   * @returns {void} return status code 204
    */
 const deleteUser = async (req, res) => {
-  const { id } = req.user;
+  // eslint-disable-next-line camelcase
+  const { userId } = req.user;
   const deleteQuery = 'DELETE FROM users WHERE id=$1 returning *';
   try {
-    const { rows } = await dbQuery.query(deleteQuery, [id]);
+    // eslint-disable-next-line camelcase
+    const { rows } = await dbQuery.query(deleteQuery, [userId]);
     const dbResponse = rows[0];
     if (!dbResponse) {
       notFound.description = 'User not found';
@@ -136,6 +138,7 @@ const deleteUser = async (req, res) => {
     noContent.description = 'User deleted Successfully';
     return res.status(204).send(noContent);
   } catch (error) {
+    console.log(error);
     return res.status(400).send(error);
   }
 };

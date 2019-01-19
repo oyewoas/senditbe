@@ -1,13 +1,12 @@
 import { createUser, loginUser, deleteUser } from '../controller/usersController';
-
-// import verifyAuth from '../middleware/verifyAuth';
+import verifyAuth from '../middlewares/verifyAuth';
 
 export default function route(app) {
   app.post('/api/v1/user/signup', createUser);
 
   app.post('/api/v1/user/login', loginUser);
 
-  app.delete('/api/v1/users/me', deleteUser);
+  app.delete('/api/v1/users/me', verifyAuth, deleteUser);
   
   // app.get('/api/v1/user/profile', verifyAuth, getProfile);
   
