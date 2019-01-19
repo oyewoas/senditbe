@@ -15,7 +15,7 @@ import {
 
 const badRequest = { status: '400', message: 'Bad Request' };
 const notFound = { status: '404', message: 'Not Found' };
-const internalserverError = { status: '500', message: 'Internal Server Error' };
+const noContent = { status: '204', message: 'No Content' };
 const conflictExists = { status: '409', message: 'Conflict' };
 
 
@@ -65,8 +65,8 @@ const createUser = async (req, res) => {
     return res.status(201).send(replySignUp);
   } catch (error) {
     if (error.routine === '_bt_check_unique') {
-      badRequest.description = 'User with that EMAIL already exist';
-      return res.status(400).send(badRequest);
+      conflictExists.description = 'User with that EMAIL already exist';
+      return res.status(409).send(conflictExists);
     }
     return res.status(400).send(error);
   }
@@ -116,4 +116,28 @@ const loginUser = async (req, res) => {
     return res.status(400).send(error);
   }
 };
-export { createUser, loginUser };
+
+/**
+   * Delete A User
+   * @param {object} req 
+   * @param {object} res 
+   * @returns {void} return status code 204 
+   */
+const deleteUser = async (req, res) => {
+  const { id } = req.user;
+  const deleteQuery = 'DELETE FROM users WHERE id=$1 returning *';
+  try {
+    const { rows } = await dbQuery.query(deleteQuery, [id]);
+    const dbResponse = rows[0];
+    if (!dbResponse) {
+      notFound.description = 'User not found';
+      return res.status(404).send(notFound);
+    }
+    noContent.description = 'User deleted Successfully';
+    return res.status(204).send(noContent);
+  } catch (error) {
+    return res.status(400).send(error);
+  }
+};
+
+export { createUser, loginUser, deleteUser };
