@@ -142,4 +142,54 @@ const deleteUser = async (req, res) => {
   }
 };
 
-export { createUser, loginUser, deleteUser };
+
+/**
+   * Get All Users
+   * @param {object} req 
+   * @param {object} res 
+   * @returns {object} users array
+   */
+const getAllUsers = async (req, res) => {
+  const findAllUsersQuery = 'SELECT * FROM users ORDER BY user_id ASC';
+  try {
+    const { rows } = await dbQuery.query(findAllUsersQuery);
+    const dbResponse = rows;
+    return res.status(200).send(dbResponse);
+  } catch (error) {
+    badRequest.description = 'No users Registered';
+    return res.status(400).send(badRequest);
+  }
+};
+
+/**
+   * Get A Single User
+   * @param {object} req 
+   * @param {object} res
+   * @returns {object} reflection object
+   */
+const getSingleUser = async (req, res) => {
+  // eslint-disable-next-line camelcase
+  const id = req.params.user_id;
+  const getUsersQuery = 'SELECT * FROM reflections WHERE user_id = $1';
+  try {
+    // eslint-disable-next-line camelcase
+    const { rows } = await dbQuery.query(getUsersQuery, [id]);
+    const dbResponse = rows[0];
+    if (!dbResponse) {
+      badRequest.description = 'The credentials you provided is incorrect or this User does not exist';
+      return res.status(400).send(badRequest);
+    }
+    return res.status(200).send(dbResponse);
+  } catch (error) {
+    badRequest.description = 'Cannot Find or Get user';
+    return res.status(400).send(badRequest);
+  }
+};
+
+export {
+  createUser,
+  loginUser,
+  deleteUser,
+  getAllUsers,
+  getSingleUser,
+};
