@@ -169,11 +169,11 @@ const getAllUsers = async (req, res) => {
    */
 const getSingleUser = async (req, res) => {
   // eslint-disable-next-line camelcase
-  const id = req.params.user_id;
-  const getUsersQuery = 'SELECT * FROM reflections WHERE user_id = $1';
+  const { user_id } = req.user;
+  const getaUserQuery = 'SELECT * FROM reflections WHERE user_id = $1';
   try {
     // eslint-disable-next-line camelcase
-    const { rows } = await dbQuery.query(getUsersQuery, [id]);
+    const { rows } = await dbQuery.query(getaUserQuery, [user_id]);
     const dbResponse = rows[0];
     if (!dbResponse) {
       badRequest.description = 'The credentials you provided is incorrect or this User does not exist';
