@@ -167,10 +167,10 @@ const getAllUsers = async (req, res) => {
    * @param {object} res
    * @returns {object} reflection object
    */
-const getSingleUser = async (req, res) => {
+const getUserProfile = async (req, res) => {
   // eslint-disable-next-line camelcase
   const { user_id } = req.user;
-  const getaUserQuery = 'SELECT * FROM reflections WHERE user_id = $1';
+  const getaUserQuery = 'SELECT * FROM users WHERE user_id = $1';
   try {
     // eslint-disable-next-line camelcase
     const { rows } = await dbQuery.query(getaUserQuery, [user_id]);
@@ -179,7 +179,8 @@ const getSingleUser = async (req, res) => {
       badRequest.description = 'The credentials you provided is incorrect or this User does not exist';
       return res.status(400).send(badRequest);
     }
-    return res.status(200).send(dbResponse);
+    const getUserReply = { status: '200', message: 'User Returned Successfully', user: dbResponse };
+    return res.status(200).send(getUserReply);
   } catch (error) {
     badRequest.description = 'Cannot Find or Get user';
     return res.status(400).send(badRequest);
@@ -191,5 +192,5 @@ export {
   loginUser,
   deleteUser,
   getAllUsers,
-  getSingleUser,
+  getUserProfile,
 };
