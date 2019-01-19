@@ -138,7 +138,6 @@ const deleteUser = async (req, res) => {
     noContent.description = 'User deleted Successfully';
     return res.status(204).send(noContent);
   } catch (error) {
-    console.log(error);
     return res.status(400).send(error);
   }
 };

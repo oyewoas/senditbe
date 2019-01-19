@@ -43,6 +43,7 @@ const verifyToken = async (req, res, next) => {
   }
   try {
     const decoded = await jwt.verify(token, process.env.JWT_KEY);
+    console.log(decoded);
     const selectUser = 'SELECT * FROM users WHERE id = $1';
     const { rows } = await dbQuery.query(selectUser, [decoded.user_id]);
     const dbResponse = rows[0];
