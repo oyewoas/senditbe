@@ -15,15 +15,15 @@ import {
 
 const badRequest = { status: '400', message: 'Bad Request' };
 const notFound = { status: '404', message: 'Not Found' };
-const internalserverError = { status: '500', message: 'Internal Server Error' };
+const noContent = { status: '204', message: 'No Content' };
 const conflictExists = { status: '409', message: 'Conflict' };
 
 
 /**
    * Create A User
-   * @param {object} req 
+   * @param {object} req
    * @param {object} res
-   * @returns {object} reflection object 
+   * @returns {object} reflection object
    */
 const createUser = async (req, res) => {
   const { email, username, password } = req.body;
@@ -65,8 +65,8 @@ const createUser = async (req, res) => {
     return res.status(201).send(replySignUp);
   } catch (error) {
     if (error.routine === '_bt_check_unique') {
-      badRequest.description = 'User with that EMAIL already exist';
-      return res.status(400).send(badRequest);
+      conflictExists.description = 'User with that EMAIL already exist';
+      return res.status(409).send(conflictExists);
     }
     return res.status(400).send(error);
   }
@@ -74,9 +74,9 @@ const createUser = async (req, res) => {
 
 /**
    * Login
-   * @param {object} req 
+   * @param {object} req
    * @param {object} res
-   * @returns {object} user object 
+   * @returns {object} user object
    */
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
@@ -93,7 +93,7 @@ const loginUser = async (req, res) => {
     const { rows } = await dbQuery.query(loginUserQuery, [email]);
     const dbResponse = rows[0];
     if (!dbResponse) {
-      badRequest.description = 'The credentials you provided is incorrect';
+      badRequest.description = 'The credentials you provided is incorrect or this User does not exist';
       return res.status(400).send(badRequest);
     }
     if (!comparePassword(dbResponse.password, password)) {
@@ -116,4 +116,30 @@ const loginUser = async (req, res) => {
     return res.status(400).send(error);
   }
 };
-export { createUser, loginUser };
+
+/**
+   * Delete A User
+   * @param {object} req
+   * @param {object} res
+   * @returns {void} return status code 204
+   */
+const deleteUser = async (req, res) => {
+  // eslint-disable-next-line camelcase
+  const { user_id } = req.user;
+  const deleteQuery = 'DELETE FROM users WHERE user_id=$1 returning *';
+  try {
+    // eslint-disable-next-line camelcase
+    const { rows } = await dbQuery.query(deleteQuery, [user_id]);
+    const dbResponse = rows[0];
+    if (!dbResponse) {
+      notFound.description = 'User not found';
+      return res.status(404).send(notFound);
+    }
+    noContent.description = 'User deleted Successfully';
+    return res.status(204).send(noContent);
+  } catch (error) {
+    return res.status(400).send(error);
+  }
+};
+
+export { createUser, loginUser, deleteUser };
