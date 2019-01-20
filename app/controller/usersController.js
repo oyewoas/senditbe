@@ -10,6 +10,7 @@ import {
   isEmpty,
   generateToken,
 } from '../helpers';
+import dbquery from '../db/dbquery';
 
 // dotenv.config();
 
@@ -187,10 +188,46 @@ const getUserProfile = async (req, res) => {
   }
 };
 
+
+const updateUserProfile = async (req, res) => {
+  const { firstname, lastname, othernames } = req.body;
+  // eslint-disable-next-line camelcase
+  const { user_id } = req.user;
+  const findProfileQuery = 'SELECT * FROM users WHERE user_id = $1';
+  const updateProfileQuery = `UPDATE users
+    SET firstname=$1,lastname=$2,othernames=$3 WHERE user_id=$4 returning *`;
+  try {
+  // eslint-disable-next-line camelcase
+    const { rows } = await dbQuery.query(findProfileQuery, [user_id]);
+    const dbResponse = rows[0];
+    if (!dbResponse) {
+      badRequest.description = 'User not found or does not exist';
+      return res.status(404).send(badRequest);
+    }
+    const values = [
+      firstname || dbResponse.firstname,
+      lastname || dbResponse.lastname,
+      othernames || dbResponse.othernames,
+      // eslint-disable-next-line camelcase
+      user_id,
+    ];
+    const response = await dbquery.query(updateProfileQuery, values);
+    const dbResult = response.rows[0];
+    const updateUserReply = { status: '200', message: 'User Updated Successfully', user: dbResult };
+    return res.status(200).send(updateUserReply);
+  } catch (err) {
+    console.log(err);
+    badRequest.description = 'Cannot update user';
+    return res.status(400).send(badRequest);
+  }
+};
+
+
 export {
   createUser,
   loginUser,
   deleteUser,
   getAllUsers,
   getUserProfile,
+  updateUserProfile,
 };
