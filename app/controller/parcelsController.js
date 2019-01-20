@@ -72,7 +72,6 @@ const getAllParcelOrders = async (req, res) => {
     const dbResponse = rows;
     return res.status(200).send(dbResponse);
   } catch (error) {
-    console.log(error);
     badRequest.description = 'No Parcel Order';
     return res.status(400).send(error);
   }
@@ -101,7 +100,6 @@ const getAparcel = async (req, res) => {
     getAparcelReply.data.push(dbResponse);
     return res.status(200).send(getAparcelReply);
   } catch (error) {
-      console.log(error);
     return res.status(400).send(error);
   }
 };
