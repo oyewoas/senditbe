@@ -1,14 +1,15 @@
 import { 
   createParcel,
   getAllParcelOrders,
+  getAparcel,
 } from '../controller/parcelsController';
 import verifyAuth from '../middlewares/verifyAuth';
 
 export default function route(app) {
   // const badRequest = { status: 400, message: 'Bad Request' };
 
-  // Get Request for a single entry 
-  // app.get('/api/v1/entries/:id', checkAuth, getEntry);
+  // Get Request for a single Parcel
+  app.get('/api/v1/parcels/:id', verifyAuth, getAparcel);
 
 
   // // Get request for all entries in the array
