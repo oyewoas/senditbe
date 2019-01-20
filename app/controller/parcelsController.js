@@ -84,10 +84,10 @@ const getAllParcelOrders = async (req, res) => {
    * @returns {object} Parcel object
    */
 const getAparcel = async (req, res) => {
-  const id = req.params;
+  const { id } = req.params;
   // eslint-disable-next-line camelcase
-  const user_id = req.user;
-  const getAparcelQuery = 'SELECT * FROM parcels WHERE (parcel_id, placedby) = ($1, $2)';
+  const { user_id } = req.user;
+  const getAparcelQuery = 'SELECT * FROM parcels WHERE parcel_id = $1 AND placedby = $2';
   try {
   // eslint-disable-next-line camelcase
     const { rows } = await dbQuery.query(getAparcelQuery, [id, user_id]);
