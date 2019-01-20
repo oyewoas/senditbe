@@ -1,4 +1,5 @@
-// import { createParcel } from '../controller/parcelsController';
+import { createParcel } from '../controller/parcelsController';
+import verifyAuth from '../middlewares/verifyAuth';
 
 export default function route(app) {
   // const badRequest = { status: 400, message: 'Bad Request' };
@@ -12,7 +13,7 @@ export default function route(app) {
 
 
   // // Post Request for an entry
-  // app.post('/api/v1/parcels', createParcel);
+  app.post('/api/v1/parcels', verifyAuth, createParcel);
 
 
   // // Put Request to modify the content of an entryRoutes
