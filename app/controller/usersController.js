@@ -10,7 +10,6 @@ import {
   isEmpty,
   generateToken,
 } from '../helpers';
-import dbquery from '../db/dbquery';
 
 // dotenv.config();
 
@@ -57,10 +56,7 @@ const createUser = async (req, res) => {
     const message = 'User Created Successfully';
     replySignUp.data.push({
       token,
-      user: {
-        user_id: dbResponse.user_id,
-        username: dbResponse.username,
-      },
+      user: dbResponse,
       message,
     });
     return res.status(201).send(replySignUp);
@@ -106,10 +102,7 @@ const loginUser = async (req, res) => {
     const message = 'User Logged In Successfully';
     replySignUp.data.push({
       token,
-      user: {
-        user_id: dbResponse.user_id,
-        username: dbResponse.username,
-      },
+      user: dbResponse,
       message,
     });
     return res.status(201).send(replySignUp);
@@ -188,7 +181,12 @@ const getUserProfile = async (req, res) => {
   }
 };
 
-
+/**
+   * Update A Single User
+   * @param {object} req 
+   * @param {object} res
+   * @returns {object} reflection object
+   */
 const updateUserProfile = async (req, res) => {
   const { firstname, lastname, othernames } = req.body;
   // eslint-disable-next-line camelcase
@@ -211,12 +209,11 @@ const updateUserProfile = async (req, res) => {
       // eslint-disable-next-line camelcase
       user_id,
     ];
-    const response = await dbquery.query(updateProfileQuery, values);
+    const response = await dbQuery.query(updateProfileQuery, values);
     const dbResult = response.rows[0];
     const updateUserReply = { status: '200', message: 'User Updated Successfully', user: dbResult };
     return res.status(200).send(updateUserReply);
   } catch (err) {
-    console.log(err);
     badRequest.description = 'Cannot update user';
     return res.status(400).send(badRequest);
   }
