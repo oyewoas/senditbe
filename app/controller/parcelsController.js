@@ -67,7 +67,7 @@ const conflictExists = { status: '409', message: 'Conflict' };
    * Create A Parcel Delivery Order
    * @param {object} req
    * @param {object} res
-   * @returns {object} reflection object
+   * @returns {object} Parcel object
    */
 
 const createParcel = async (req, res) => {
@@ -112,6 +112,26 @@ const createParcel = async (req, res) => {
   }
 };
 
+/**
+   * Get All Parcel Order
+   * @param {object} req 
+   * @param {object} res 
+   * @returns {object} Parcel array
+   */
+const getAllParcelOrders = async (req, res) => {
+  const getAllParcelOrdersQuery = 'SELECT * FROM parcels ORDER BY parcel_id ASC';
+  try {
+    const { rows } = await dbQuery.query(getAllParcelOrdersQuery);
+    const dbResponse = rows;
+    return res.status(200).send(dbResponse);
+  } catch (error) {
+    console.log(error);
+    badRequest.description = 'No Parcel Order';
+    return res.status(400).send(error);
+  }
+};
+
 export {
   createParcel,
+  getAllParcelOrders,
 }

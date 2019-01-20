@@ -1,4 +1,7 @@
-import { createParcel } from '../controller/parcelsController';
+import { 
+  createParcel,
+  getAllParcelOrders,
+} from '../controller/parcelsController';
 import verifyAuth from '../middlewares/verifyAuth';
 
 export default function route(app) {
@@ -14,6 +17,10 @@ export default function route(app) {
 
   // // Post Request for an entry
   app.post('/api/v1/parcels', verifyAuth, createParcel);
+
+  // Fetch all parcel delivery orders
+  app.get('/api/v1/parcels', getAllParcelOrders);
+
 
 
   // // Put Request to modify the content of an entryRoutes
