@@ -1,5 +1,5 @@
 import { createUser, loginUser, deleteUser, 
-  getAllUsers, getUserProfile,
+  getAllUsers, getUserProfile, updateUserProfile, 
 } from '../controller/usersController';
 import verifyAuth from '../middlewares/verifyAuth';
 
@@ -11,6 +11,8 @@ export default function route(app) {
   app.delete('/api/v1/user/me', verifyAuth, deleteUser);
 
   app.get('/api/v1/user/profile', verifyAuth, getUserProfile);
+
+  app.put('/api/v1/user/profile', verifyAuth, updateUserProfile);
 
   app.get('/api/v1/users', getAllUsers);
 
