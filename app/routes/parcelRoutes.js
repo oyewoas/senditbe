@@ -4,6 +4,7 @@ import {
   getAparcel,
   getAllParcelforUser,
   cancelParcelOrder,
+  updateParcelDestination,
 } from '../controller/parcelsController';
 import verifyAuth from '../middlewares/verifyAuth';
 
@@ -31,5 +32,8 @@ export default function route(app) {
 
 
   // Delete Request to delete A parcel
-  app.delete('/api/v1/parcels/:id', verifyAuth, cancelParcelOrder);
+  app.patch('/api/v1/parcels/:id/cancel', verifyAuth, cancelParcelOrder);
+
+  app.patch('/api/v1/parcels/:id/destination', verifyAuth, updateParcelDestination);
+
 }

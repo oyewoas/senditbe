@@ -163,11 +163,55 @@ const cancelParcelOrder = async (req, res) => {
   }
 };
 
-  
+  /**
+ * Update A Reflection
+ * @param {object} req 
+ * @param {object} res 
+ * @returns {object} updated reflection
+ */
+const updateParcelDestination = async (req, res) => {
+  const { id } = req.params;
+  const { toaddress } = req.body;
+  // eslint-disable-next-line camelcase
+  const { user_id } = req.user;
+  const findAparcelQuery = 'SELECT * FROM parcels WHERE parcel_id=$1 AND placedby = $2';
+  const updateParcelQuery =`UPDATE parcels
+    SET toaddress=$1 WHERE parcel_id=$2 AND placedby = $3 returning *`;
+  try {
+  // eslint-disable-next-line camelcase
+    const { rows } = await dbQuery.query(findAparcelQuery, [id, user_id]);
+    const dbResponse = rows[0];
+    if (!dbResponse) {
+      notFound.description = 'Parcel order Not Found';
+      return res.status(404).send(notFound);
+    }
+    const values = [
+      toaddress,
+      id,
+      // eslint-disable-next-line camelcase
+      user_id,
+    ];
+    const response = await dbQuery.query(updateParcelQuery, values);
+    const dbResult = response.rows[0];
+    const parcelId = dbResult.parcel_id;
+    const to = dbResult.toaddress;
+    const updateParcelReply = { status: '200', data: [] };
+    const message = 'Parcel destination updated';
+    updateParcelReply.data.push({
+      parcelId,
+      to,
+      message,
+    });
+    return res.status(200).send(updateParcelReply);
+  } catch (err) {
+    return res.status(400).send(err);
+  }
+}; 
 export {
   createParcel,
   getAllParcelOrders,
   getAparcel,
   getAllParcelforUser,
   cancelParcelOrder,
+  updateParcelDestination,
 };
