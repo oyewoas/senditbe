@@ -2,6 +2,7 @@ import {
   createParcel,
   getAllParcelOrders,
   getAparcel,
+  getAllParcelforUser,
 } from '../controller/parcelsController';
 import verifyAuth from '../middlewares/verifyAuth';
 
@@ -12,11 +13,11 @@ export default function route(app) {
   app.get('/api/v1/parcels/:id', verifyAuth, getAparcel);
 
 
-  // // Get request for all entries in the array
-  // app.get('/api/v1/entries', checkAuth, getEntries);
+  // // Get request for all Parcels order by a user
+  app.get('/api/v1/users/parcels', verifyAuth, getAllParcelforUser);
 
 
-  // // Post Request for an entry
+  // // Post Request for a parcel entry
   app.post('/api/v1/parcels', verifyAuth, createParcel);
 
   // Fetch all parcel delivery orders
