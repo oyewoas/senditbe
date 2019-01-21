@@ -3,6 +3,7 @@ import {
   getAllParcelOrders,
   getAparcel,
   getAllParcelforUser,
+  cancelParcelOrder,
 } from '../controller/parcelsController';
 import verifyAuth from '../middlewares/verifyAuth';
 
@@ -29,6 +30,6 @@ export default function route(app) {
   // app.put('/api/v1/entries/:id', checkAuth, updateEntry);
 
 
-  // // Delete Request to delete an entry
-  // app.delete('/api/v1/entries/:id', checkAuth, deleteEntry);
+  // Delete Request to delete A parcel
+  app.delete('/api/v1/parcels/:id', verifyAuth, cancelParcelOrder);
 }

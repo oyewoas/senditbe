@@ -131,10 +131,43 @@ const getAllParcelforUser = async (req, res) => {
     return res.status(400).send(error);
   }
 };
+
+/**
+   * Delete A Parcel
+   * @param {object} req 
+   * @param {object} res 
+   * @returns {void} return statuc code 204 
+   */
+const cancelParcelOrder = async (req, res) => {
+  const { id } = req.params;
+  // eslint-disable-next-line camelcase
+  const { user_id } = req.user;
+  const cancelParcelQuery = 'DELETE FROM parcels WHERE parcel_id=$1 AND placedby = $2 returning *';
+  try {
+  // eslint-disable-next-line camelcase
+    const { rows } = await dbQuery.query(cancelParcelQuery, [id, user_id]);
+    const dbResponse = rows[0];
+    if (!dbResponse) {
+      notFound.description = 'Users Parcels order Not Found';
+      return res.status(404).send(notFound);
+    }
+    const cancelParcelReply = { status: '204', data: [] };
+    const message = 'Order Cancelled';
+    cancelParcelReply.data.push({
+      id,
+      message,
+    });
+    return res.status(204).send(cancelParcelReply);
+  } catch (error) {
+    return res.status(400).send(error);
+  }
+};
+
   
 export {
   createParcel,
   getAllParcelOrders,
   getAparcel,
   getAllParcelforUser,
+  cancelParcelOrder,
 };
