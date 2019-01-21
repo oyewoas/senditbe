@@ -70,7 +70,8 @@ const getAllParcelOrders = async (req, res) => {
   try {
     const { rows } = await dbQuery.query(getAllParcelOrdersQuery);
     const dbResponse = rows;
-    return res.status(200).send(dbResponse);
+    const getAllParcelOrdersReply = { status: '200', data: dbResponse };
+    return res.status(200).send(getAllParcelOrdersReply);
   } catch (error) {
     badRequest.description = 'No Parcel Order';
     return res.status(400).send(error);
@@ -93,7 +94,7 @@ const getAparcel = async (req, res) => {
     const { rows } = await dbQuery.query(getAparcelQuery, [id, user_id]);
     const dbResponse = rows[0];
     if (!dbResponse) {
-      notFound.description = 'Parcel Not Found';
+      notFound.description = 'Parcels Not Found';
       return res.status(404).send(notFound);
     }
     const getAparcelReply = { status: '200', data: [] };
@@ -104,8 +105,36 @@ const getAparcel = async (req, res) => {
   }
 };
 
+/**
+   * Get Parcels For A User
+   * @param {object} req 
+   * @param {object} res
+   * @returns {object} Parcel object
+   */
+const getAllParcelforUser = async (req, res) => {
+  // eslint-disable-next-line camelcase
+  const { user_id } = req.user;
+  const getAllParcelForUserQuery = 'SELECT * FROM parcels WHERE placedby = $1 ORDER BY parcel_id DESC';
+  try {
+    // eslint-disable-next-line camelcase
+    const { rows } = await dbQuery.query(getAllParcelForUserQuery, [user_id]);
+    const dbResponse = rows;
+    // const dbRowCount = rowCount;
+    if (!dbResponse) {
+      notFound.description = 'Users Parcels order Not Found';
+      return res.status(404).send(notFound);
+    }
+    const getAparcelReply = { status: '200', data: dbResponse };
+    // getAparcelReply.data.push(dbRowCount);
+    return res.status(200).send(getAparcelReply);
+  } catch (error) {
+    return res.status(400).send(error);
+  }
+};
+  
 export {
   createParcel,
   getAllParcelOrders,
   getAparcel,
+  getAllParcelforUser,
 };
