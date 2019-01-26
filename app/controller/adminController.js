@@ -225,6 +225,136 @@ const updateAdminProfile = async (req, res) => {
 };
 
 
+
+/**
+ * Update A Parcel status
+ * @param {object} req 
+ * @param {object} res 
+ * @returns {object} updated parcel status
+ */
+const updateParcelStatus = async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+  // eslint-disable-next-line camelcase
+  const findAparcelQuery = 'SELECT * FROM parcels WHERE parcel_id=$1';
+  const updateParcelQuery = `UPDATE parcels
+      SET status=$1 WHERE parcel_id=$2 returning *`;
+  try {
+    // eslint-disable-next-line camelcase
+    const { rows } = await dbQuery.query(findAparcelQuery, [id]);
+    const dbResponse = rows[0];
+    if (!dbResponse) {
+      notFound.description = 'Parcel order Not Found';
+      return res.status(404).send(notFound);
+    }
+    const values = [
+      status,
+      id,
+      // eslint-disable-next-line camelcase
+    ];
+    const response = await dbQuery.query(updateParcelQuery, values);
+    const dbResult = response.rows[0];
+    const parcelId = dbResult.parcel_id;
+    const statusReport = dbResult.status;
+    const updateParcelReply = { status: '200', data: [] };
+    const message = 'Parcel status updated';
+    updateParcelReply.data.push({
+      parcelId,
+      statusReport,
+      message,
+    });
+    return res.status(200).send(updateParcelReply);
+  } catch (err) {
+    return res.status(400).send(err);
+  }
+}; 
+
+/**
+ * Update A Parcel currentlocation
+ * @param {object} req 
+ * @param {object} res 
+ * @returns {object} updated parcel
+ */
+const updateParcelLocation = async (req, res) => {
+  const { id } = req.params;
+  const { currentlocation } = req.body;
+  // eslint-disable-next-line camelcase
+  const findAparcelQuery = 'SELECT * FROM parcels WHERE parcel_id=$1';
+  const updateParcelQuery = `UPDATE parcels
+        SET currentlocation=$1 WHERE parcel_id=$2 returning *`;
+  try {
+    // eslint-disable-next-line camelcase
+    const { rows } = await dbQuery.query(findAparcelQuery, [id]);
+    const dbResponse = rows[0];
+    if (!dbResponse) {
+      notFound.description = 'Parcel order Not Found';
+      return res.status(404).send(notFound);
+    }
+    const values = [
+      currentlocation,
+      id,
+      // eslint-disable-next-line camelcase
+    ];
+    const response = await dbQuery.query(updateParcelQuery, values);
+    const dbResult = response.rows[0];
+    const parcelId = dbResult.parcel_id;
+    const currentLocation = dbResult.currentlocation;
+    const updateParcelReply = { status: '200', data: [] };
+    const message = 'Parcel location updated';
+    updateParcelReply.data.push({
+      parcelId,
+      currentLocation,
+      message,
+    });
+    return res.status(200).send(updateParcelReply);
+  } catch (err) {
+    return res.status(400).send(err);
+  }
+}; 
+
+/**
+ * Update A Parcel Delivery time
+ * @param {object} req 
+ * @param {object} res 
+ * @returns {object} updated parcel
+ */
+const updateDeliveryTime = async (req, res) => {
+  const { id } = req.params;
+  const deliveredOn = moment(new Date());
+  // eslint-disable-next-line camelcase
+  const findAparcelQuery = 'SELECT * FROM parcels WHERE parcel_id=$1';
+  const updateParcelQuery = `UPDATE parcels
+          SET deliveredon=$1 WHERE parcel_id=$2 returning *`;
+  try {
+    // eslint-disable-next-line camelcase
+    const { rows } = await dbQuery.query(findAparcelQuery, [id]);
+    const dbResponse = rows[0];
+    if (!dbResponse) {
+      notFound.description = 'Parcel order Not Found';
+      return res.status(404).send(notFound);
+    }
+    const values = [
+      deliveredOn,
+      id,
+      // eslint-disable-next-line camelcase
+    ];
+    const response = await dbQuery.query(updateParcelQuery, values);
+    const dbResult = response.rows[0];
+    const parcelId = dbResult.parcel_id;
+    const { deliveredon }= dbResult;
+    const updateParcelReply = { status: '200', data: [] };
+    const message = 'Parcel Delivery Time updated';
+    updateParcelReply.data.push({
+      parcelId,
+      deliveredon,
+      message,
+    });
+    return res.status(200).send(updateParcelReply);
+  } catch (err) {
+    return res.status(400).send(err);
+  }
+}; 
+
 export {
   createAdmin,
   loginAdmin,
@@ -232,4 +362,7 @@ export {
   getAllAdmin,
   getAdminProfile,
   updateAdminProfile,
+  updateParcelStatus,
+  updateParcelLocation,
+  updateDeliveryTime,
 };
