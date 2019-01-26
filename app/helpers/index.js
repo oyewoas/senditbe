@@ -68,6 +68,16 @@ const generateToken = (email, id) => {
   return token;
 };
 
+const generateAdminToken = (email, id, isAdmin) => {
+  const token = jwt.sign({
+    userEmail: email,
+    userId: id,
+    admin: isAdmin,
+  },
+  process.env.JWT_KEY, { expiresIn: '3d' });
+  return token;
+};
+
 export {
   hashPassword,
   comparePassword,
@@ -75,4 +85,5 @@ export {
   validatePassword,
   isEmpty,
   generateToken,
+  generateAdminToken,
 };
