@@ -22,18 +22,17 @@ export default function route(app) {
   // // Post Request for a parcel entry
   app.post('/api/v1/parcels', verifyAuth, createParcel);
 
+  // Delete Request to delete A parcel
+  app.patch('/api/v1/parcels/:id/cancel', verifyAuth, cancelParcelOrder);
+
+  app.patch('/api/v1/parcels/:id/destination', verifyAuth, updateParcelDestination);
+
   // Fetch all parcel delivery orders
-  app.get('/api/v1/parcels', getAllParcelOrders);
+  // app.get('/api/v1/parcels', getAllParcelOrders);
 
 
 
   // // Put Request to modify the content of an entryRoutes
   // app.put('/api/v1/entries/:id', checkAuth, updateEntry);
-
-
-  // Delete Request to delete A parcel
-  app.patch('/api/v1/parcels/:id/cancel', verifyAuth, cancelParcelOrder);
-
-  app.patch('/api/v1/parcels/:id/destination', verifyAuth, updateParcelDestination);
 
 }

@@ -355,6 +355,25 @@ const updateDeliveryTime = async (req, res) => {
   }
 }; 
 
+/**
+   * Get All Parcel Order
+   * @param {object} req 
+   * @param {object} res 
+   * @returns {object} Parcel array
+   */
+const adminGetAllParcelOrders = async (req, res) => {
+  const getAllParcelOrdersQuery = 'SELECT * FROM parcels ORDER BY parcel_id DESC';
+  try {
+    const { rows } = await dbQuery.query(getAllParcelOrdersQuery);
+    const dbResponse = rows;
+    const getAllParcelOrdersReply = { status: '200', data: dbResponse };
+    return res.status(200).send(getAllParcelOrdersReply);
+  } catch (error) {
+    badRequest.description = 'No Parcel Order';
+    return res.status(400).send(error);
+  }
+};
+
 export {
   createAdmin,
   loginAdmin,
@@ -365,4 +384,5 @@ export {
   updateParcelStatus,
   updateParcelLocation,
   updateDeliveryTime,
+  adminGetAllParcelOrders,
 };
