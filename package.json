@@ -4,7 +4,7 @@
   "description": "A parcel delivery application database Api",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --compilers js:babel-core/register \"./tests/*.spec.js\" --timeout 150000",
     "create-tables": "babel-node ./app/db/db createAllTables",
     "build": "babel server.js --out-dir build",
     "dev-start": "nodemon --watch . --exec babel-node -- server.js"
@@ -27,13 +27,11 @@
     "babel-polyfill": "^6.26.0",
     "bcrypt": "^3.0.3",
     "body-parser": "^1.18.3",
-    "chai": "^4.2.0",
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.4.0",
     "make-runnable": "^1.3.6",
-    "mocha": "^5.2.0",
     "moment": "^2.23.0",
     "path": "^0.12.7",
     "pg": "^7.8.0",
@@ -43,9 +41,12 @@
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-watch": "^2.0.8",
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
     "eslint": "^5.12.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
+    "mocha": "^5.2.0",
     "nodemon": "^1.18.9"
   }
 }
