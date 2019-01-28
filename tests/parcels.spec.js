@@ -5,9 +5,9 @@
 // import dotenv from 'dotenv';
 // import server from '../server';
 // import pool from '../app/db/pool';
-// import createAllTables from '../app/db/db';
+// import { createAllTables } from '../app/db/db';
 
-// createAllTables();
+// // createAllTables();
 
 
 // dotenv.config();
@@ -49,11 +49,11 @@
 //       //  pool.end;()
 //     });
 // });
-// // Testing the Get all entries
-// describe('/GET entries', () => {
-//   it('it should not GET all the entries when there is no auth token', (done) => {
+// // Testing the Get all parcels
+// describe('/GET parcels', () => {
+//   it('it should not GET all the parcels when there is no auth token', (done) => {
 //     chai.request(server)
-//       .get('/api/v1/entries')
+//       .get('/api/v1/parcels')
 //       .end((err, res) => {
 //         // console.log(JSON.stringify(res.body, undefined, 3));
 //         expect(res.body.message).equal('Auth failed');
@@ -61,30 +61,30 @@
 //         done();
 //       });
 //   });
-//   it('it should not GET entries when empty', (done) => {
+//   it('it should not GET parcels when empty', (done) => {
 //     chai.request(server)
-//       .get('/api/v1/entries')
+//       .get('/api/v1/parcels')
 //       .set('Authorization', `Bearer ${token}`)
 //       .end((err, res) => {
 //         // console.log(JSON.stringify(res.body, undefined, 3));
 //         expect(res.status).equal(404);
-//         expect(res.body.message).equal('There is no entries yet');
+//         expect(res.body.message).equal('There is no parcels yet');
 //         done();
 //       });
 //   });
-//   it('it should GET all the entries', (done) => {
+//   it('it should GET all the parcels', (done) => {
 //     pool.query('INSERT INTO users(email, password, username, user_id) values($1, $2, $3, $4)', [email, password, username, 1], (err) => {
 //       if (err) {
 //         // console.log(err);
 //       } else {
 //         // console.log(result);
-//         pool.query('INSERT INTO entries(title, description, user_id) values($1, $2, $3)', [title, description, 1], () => {
+//         pool.query('INSERT INTO parcels(title, description, user_id) values($1, $2, $3)', [title, description, 1], () => {
 //           chai.request(server)
-//             .get('/api/v1/entries')
+//             .get('/api/v1/parcels')
 //             .set('Authorization', `Bearer ${token}`)
 //             .end((error, res) => {
 //               // console.log(JSON.stringify(res.body, undefined, 3));
-//               expect(res.body.data.entries).to.be.an('Array');
+//               expect(res.body.data.parcels).to.be.an('Array');
 //               expect(res.status).equal(200);
 //               expect(res.body.data.size).equal(1);
 //               done();
@@ -101,7 +101,7 @@
 //       title: 'Today was Hectic',
 //     };
 //     chai.request(server)
-//       .post('/api/v1/entries')
+//       .post('/api/v1/parcels')
 //       .send(entry)
 //       .set('Authorization', `Bearer ${token}`)
 //       .end((err, res) => {
@@ -116,7 +116,7 @@
 //       text: 'Today was Hectic',
 //     };
 //     chai.request(server)
-//       .post('/api/v1/entries')
+//       .post('/api/v1/parcels')
 //       .send(entry)
 //       .set('Authorization', `Bearer ${token}`)
 //       .end((err, res) => {
@@ -132,7 +132,7 @@
 //       text: '',
 //     };
 //     chai.request(server)
-//       .post('/api/v1/entries')
+//       .post('/api/v1/parcels')
 //       .send(entry)
 //       .set('Authorization', `Bearer ${token}`)
 //       .end((err, res) => {
@@ -148,7 +148,7 @@
 //       title: '',
 //     };
 //     chai.request(server)
-//       .post('/api/v1/entries')
+//       .post('/api/v1/parcels')
 //       .send(entry)
 //       .set('Authorization', `Bearer ${token}`)
 //       .end((err, res) => {
@@ -164,7 +164,7 @@
 //       title: '',
 //     };
 //     chai.request(server)
-//       .post('/api/v1/entries')
+//       .post('/api/v1/parcels')
 //       .send(entry)
 //       .set('Authorization', `Bearer ${token}`)
 //       .end((err, res) => {
@@ -180,7 +180,7 @@
 //       title: 'So that was how my day went, hectic as ...',
 //     };
 //     chai.request(server)
-//       .post('/api/v1/entries')
+//       .post('/api/v1/parcels')
 //       .send(entry)
 //       .set('Authorization', `Bearer ${token}`)
 //       .end((err, res) => {
@@ -202,12 +202,12 @@
 //         // console.log(err);
 //       } else {
 //         chai.request(server)
-//           .post('/api/v1/entries')
+//           .post('/api/v1/parcels')
 //           .send(entry)
 //           .set('Authorization', `Bearer ${token}`)
 //           .end((error, res) => {
 //             expect(res.body.message).equals('Entry Created successfully');
-//             expect(res.body.data.entries).to.be.an('Array');
+//             expect(res.body.data.parcels).to.be.an('Array');
 //             expect(res.body.status).equals('201');
 //             expect(res.status).equals(201);
 //             done();
@@ -221,7 +221,7 @@
 //       title: 'So that was how my day went, hectic as ...',
 //     };
 //     chai.request(server)
-//       .post('/api/v1/entries')
+//       .post('/api/v1/parcels')
 //       .send(entry)
 //       .end((err, res) => {
 //         // console.log(JSON.stringify(res.body, undefined, 3));
@@ -236,7 +236,7 @@
 //   it('it should not GET an entry by id if there is no auth token', (done) => {
 //     const id = 1000;
 //     chai.request(server)
-//       .get(`/api/v1/entries/${id}`)
+//       .get(`/api/v1/parcels/${id}`)
 //       .end((err, res) => {
 //         expect(res.body.message).equals('Auth failed');
 //         expect(res.status).equals(401);
@@ -247,7 +247,7 @@
 //   it('it should not GET an entry by id if entry does not exist', (done) => {
 //     const id = 1000;
 //     chai.request(server)
-//       .get(`/api/v1/entries/${id}`)
+//       .get(`/api/v1/parcels/${id}`)
 //       .set('Authorization', `Bearer ${token}`)
 //       .end((err, res) => {
 //         expect(res.body.message).equals('Entry Not Found');
@@ -262,10 +262,10 @@
 //         // console.log(err);
 //       } else {
 //         // console.log(result);
-//         pool.query('INSERT INTO entries(title, description, user_id, id) values($1, $2, $3, $4)', [title, description, 1, 1], () => {
+//         pool.query('INSERT INTO parcels(title, description, user_id, id) values($1, $2, $3, $4)', [title, description, 1, 1], () => {
 //           const id = 1;
 //           chai.request(server)
-//             .get(`/api/v1/entries/${id}`)
+//             .get(`/api/v1/parcels/${id}`)
 //             .set('Authorization', `Bearer ${token}`)
 //             .end((error, res) => {
 //               // console.log(JSON.stringify(res.body, undefined, 3));
@@ -293,7 +293,7 @@
 //     };
 //     const id = 1000;
 //     chai.request(server)
-//       .put(`/api/v1/entries/${id}`)
+//       .put(`/api/v1/parcels/${id}`)
 //       .send(entry)
 //       .set('Authorization', `Bearer ${token}`)
 //       .end((err, res) => {
@@ -309,7 +309,7 @@
 //     };
 //     const id = 1000;
 //     chai.request(server)
-//       .put(`/api/v1/entries/${id}`)
+//       .put(`/api/v1/parcels/${id}`)
 //       .send(entry)
 //       .set('Authorization', `Bearer ${token}`)
 //       .end((err, res) => {
@@ -326,7 +326,7 @@
 //     };
 //     const id = 1000;
 //     chai.request(server)
-//       .put(`/api/v1/entries/${id}`)
+//       .put(`/api/v1/parcels/${id}`)
 //       .send(entry)
 //       .set('Authorization', `Bearer ${token}`)
 //       .end((err, res) => {
@@ -343,7 +343,7 @@
 //     };
 //     const id = 1000;
 //     chai.request(server)
-//       .put(`/api/v1/entries/${id}`)
+//       .put(`/api/v1/parcels/${id}`)
 //       .send(entry)
 //       .set('Authorization', `Bearer ${token}`)
 //       .end((err, res) => {
@@ -360,7 +360,7 @@
 //     };
 //     const id = 1000;
 //     chai.request(server)
-//       .put(`/api/v1/entries/${id}`)
+//       .put(`/api/v1/parcels/${id}`)
 //       .send(entry)
 //       .set('Authorization', `Bearer ${token}`)
 //       .end((err, res) => {
@@ -373,7 +373,7 @@
 //   it('it should not UPDATE an entry by id if there is no auth token', (done) => {
 //     const id = 1000;
 //     chai.request(server)
-//       .put(`/api/v1/entries/${id}`)
+//       .put(`/api/v1/parcels/${id}`)
 //       .send(entryUpdated)
 //       .end((err, res) => {
 //         expect(res.body.message).equals('Auth failed');
@@ -385,7 +385,7 @@
 //   // it('it should POST an entry by id if entry does not exist while updating', (done) => {
 //   //   const id = 1000;
 //   //   chai.request(server)
-//   //     .put(`/api/v1/entries/${id}`)
+//   //     .put(`/api/v1/parcels/${id}`)
 //   //     .set('Authorization', `Bearer ${token}`)
 //   //     .send(entryUpdated)
 //   //     .end((err, res) => {
@@ -401,10 +401,10 @@
 //         // console.log(err);
 //       } else {
 //         // console.log(result);
-//         pool.query('INSERT INTO entries(title, description, user_id, id) values($1, $2, $3, $4)', [title, description, 1, 1], () => {
+//         pool.query('INSERT INTO parcels(title, description, user_id, id) values($1, $2, $3, $4)', [title, description, 1, 1], () => {
 //           const id = 1;
 //           chai.request(server)
-//             .put(`/api/v1/entries/${id}`)
+//             .put(`/api/v1/parcels/${id}`)
 //             .set('Authorization', `Bearer ${token}`)
 //             .send(entryUpdated)
 //             .end((error, res) => {
@@ -424,7 +424,7 @@
 //   it('it should not DELETE an entry by id if there is no auth token', (done) => {
 //     const id = 1000;
 //     chai.request(server)
-//       .delete(`/api/v1/entries/${id}`)
+//       .delete(`/api/v1/parcels/${id}`)
 //       .end((err, res) => {
 //         expect(res.body.message).equals('Auth failed');
 //         expect(res.status).equals(401);
@@ -435,7 +435,7 @@
 //   it('it should not DELETE an entry by id if entry does not exist', (done) => {
 //     const id = 1000;
 //     chai.request(server)
-//       .delete(`/api/v1/entries/${id}`)
+//       .delete(`/api/v1/parcels/${id}`)
 //       .set('Authorization', `Bearer ${token}`)
 //       .end((err, res) => {
 //         expect(res.body.message).equals('Entry does not exist');
@@ -449,10 +449,10 @@
 //         // console.log(err);
 //       } else {
 //         // console.log(result);
-//         pool.query('INSERT INTO entries(title, description, user_id, id) values($1, $2, $3, $4)', [title, description, 1, 1], () => {
+//         pool.query('INSERT INTO parcels(title, description, user_id, id) values($1, $2, $3, $4)', [title, description, 1, 1], () => {
 //           const id = 1;
 //           chai.request(server)
-//             .delete(`/api/v1/entries/${id}`)
+//             .delete(`/api/v1/parcels/${id}`)
 //             .set('Authorization', `Bearer ${token}`)
 //             .end((error, res) => {
 //               // console.log(JSON.stringify(res.body, undefined, 3));
@@ -472,7 +472,7 @@
 // describe('/POST new user', () => {
 //   it('it should not CREATE a user without email or password field only', (done) => {
 //     const user = {
-//       username: 'phemmelliot',
+//       username: 'ayooluwa',
 //     };
 //     chai.request(server)
 //       .post('/api/v1/user/signup')
@@ -514,7 +514,7 @@
 
 //   it('it should not CREATE a user with empty email or password field only', (done) => {
 //     const user = {
-//       username: 'phemmelliot',
+//       username: 'ayooluwa',
 //       password: '',
 //       email: '',
 //     };
@@ -564,9 +564,9 @@
 //     const user = {
 //       email: 'test@gmail.com',
 //       password: 'password',
-//       username: 'phemmelliot',
+//       username: 'ayooluwa',
 //     };
-//     pool.query('INSERT INTO users(email, password, username) values($1, $2, $3)', ['test@gmail.com', 'password', 'phemmelliot'], () => {
+//     pool.query('INSERT INTO users(email, password, username) values($1, $2, $3)', ['test@gmail.com', 'password', 'ayooluwa'], () => {
 //       chai.request(server)
 //         .post('/api/v1/user/signup')
 //         .send(user)
@@ -583,7 +583,7 @@
 //     const user = {
 //       email: 'test.com',
 //       password: 'password',
-//       username: 'phemmelliot',
+//       username: 'ayooluwa',
 //     };
 //     chai.request(server)
 //       .post('/api/v1/user/signup')
@@ -599,7 +599,7 @@
 //     const user = {
 //       email: 'test.com',
 //       password: 'pass',
-//       username: 'phemmelliot',
+//       username: 'ayooluwa',
 //     };
 //     chai.request(server)
 //       .post('/api/v1/user/signup')
@@ -615,7 +615,7 @@
 //     const user = {
 //       email: 'test@gmail.com',
 //       password: '         ',
-//       username: 'phemmelliot',
+//       username: 'ayooluwa',
 //     };
 //     chai.request(server)
 //       .post('/api/v1/user/signup')
@@ -631,7 +631,7 @@
 //     const user = {
 //       email: 'test@gmail.com',
 //       password: 'password',
-//       username: 'phemmelliot',
+//       username: 'ayooluwa',
 //     };
 //     chai.request(server)
 //       .post('/api/v1/user/signup')
@@ -759,7 +759,7 @@
 //     let logInpassword;
 //     bcrypt.hash('password', 10, (error, hash) => {
 //       logInpassword = hash;
-//       pool.query('INSERT INTO users(email, password, username) values($1, $2, $3)', ['test@gmail.com', logInpassword, 'phemmelliot'], () => {
+//       pool.query('INSERT INTO users(email, password, username) values($1, $2, $3)', ['test@gmail.com', logInpassword, 'ayooluwa'], () => {
 //         chai.request(server)
 //           .post('/api/v1/user/login')
 //           .send(user)

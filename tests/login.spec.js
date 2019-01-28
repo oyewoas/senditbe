@@ -10,7 +10,7 @@ import {
   createAllTables,
 } from '../app/db/db';
 
-createAllTables();
+// createAllTables();
 
 
 dotenv.config();
@@ -38,14 +38,14 @@ beforeEach(() => {
   pool.query('TRUNCATE TABLE users CASCADE',
     (err) => {
       if (err) {
-        console.log(err);
+        // console.log(err);
       }
       //  pool.end;()
     });
   pool.query('TRUNCATE TABLE parcels CASCADE',
     (err) => {
       if (err) {
-        console.log(err);
+        // console.log(err);
       }
       //  pool.end;()
     });
@@ -61,9 +61,10 @@ describe('/POST new user', () => {
       .post('/api/v1/user/signup')
       .send(user)
       .end((err, res) => {
+        // console.log(err)
         expect(res.body.message).equals('Bad Request');
         expect(res.body.status).equals('400');
-        done();
+        done(err);
       });
   });
 
@@ -77,7 +78,7 @@ describe('/POST new user', () => {
       .end((err, res) => {
         expect(res.body.message).equals('Bad Request');
         expect(res.body.status).equals('400');
-        done();
+        done(err);
       });
   });
 
@@ -91,7 +92,7 @@ describe('/POST new user', () => {
       .end((err, res) => {
         expect(res.body.message).equals('Bad Request');
         expect(res.body.status).equals('400');
-        done();
+        done(err);
       });
   });
 
@@ -107,7 +108,7 @@ describe('/POST new user', () => {
       .end((err, res) => {
         expect(res.body.message).equals('Bad Request');
         expect(res.body.status).equals('400');
-        done();
+        done(err);
       });
   });
 
@@ -123,7 +124,7 @@ describe('/POST new user', () => {
       .end((err, res) => {
         expect(res.body.message).equals('Bad Request');
         expect(res.body.status).equals('400');
-        done();
+        done(err);
       });
   });
 
@@ -139,7 +140,7 @@ describe('/POST new user', () => {
       .end((err, res) => {
         expect(res.body.message).equals('Bad Request');
         expect(res.body.status).equals('400');
-        done();
+        done(err);
       });
   });
 
@@ -156,7 +157,7 @@ describe('/POST new user', () => {
         .end((err, res) => {
           expect(res.body.message).equals('User Already Exists');
           expect(res.body.status).equals('409');
-          done();
+          done(err);
         });
     });
   });
@@ -174,7 +175,7 @@ describe('/POST new user', () => {
       .end((err, res) => {
         expect(res.body.message).equals('Invalid email or password');
         expect(res.body.status).equals('400');
-        done();
+        done(err);
       });
   });
 
@@ -190,7 +191,7 @@ describe('/POST new user', () => {
       .end((err, res) => {
         expect(res.body.message).equals('Invalid email or password');
         expect(res.body.status).equals('400');
-        done();
+        done(err);
       });
   });
 
@@ -206,7 +207,7 @@ describe('/POST new user', () => {
       .end((err, res) => {
         expect(res.body.message).equals('Bad Request');
         expect(res.body.status).equals('400');
-        done();
+        done(err);
       });
   });
 
@@ -222,7 +223,7 @@ describe('/POST new user', () => {
       .end((err, res) => {
         expect(res.body.message).equals('User Created Successfully');
         expect(res.body.status).equals('201');
-        done();
+        done(err);
       });
   });
 });
@@ -240,7 +241,7 @@ describe('/POST Log user in', () => {
         // console.log(res.body);
         expect(res.body.message).equals('Bad Request');
         expect(res.body.status).equals('400');
-        done();
+        done(err);
       });
   });
 
@@ -255,7 +256,7 @@ describe('/POST Log user in', () => {
         // console.log(res.body);
         expect(res.body.message).equals('Bad Request');
         expect(res.body.status).equals('400');
-        done();
+        done(err);
       });
   });
 
@@ -270,7 +271,7 @@ describe('/POST Log user in', () => {
       .end((err, res) => {
         expect(res.body.message).equals('Bad Request');
         expect(res.body.status).equals('400');
-        done();
+        done(err);
       });
   });
 
@@ -285,7 +286,7 @@ describe('/POST Log user in', () => {
       .end((err, res) => {
         expect(res.body.message).equals('Bad Request');
         expect(res.body.status).equals('400');
-        done();
+        done(err);
       });
   });
 
@@ -300,7 +301,7 @@ describe('/POST Log user in', () => {
       .end((err, res) => {
         expect(res.body.message).equals('Invalid email or password');
         expect(res.body.status).equals('400');
-        done();
+        done(err);
       });
   });
 
@@ -315,7 +316,7 @@ describe('/POST Log user in', () => {
       .end((err, res) => {
         expect(res.body.message).equals('Invalid email or password');
         expect(res.body.status).equals('400');
-        done();
+        done(err);
       });
   });
 
@@ -330,7 +331,7 @@ describe('/POST Log user in', () => {
       .end((err, res) => {
         expect(res.body.message).equals('User does not exist');
         expect(res.body.status).equals('401');
-        done();
+        done(err);
       });
   });
 
@@ -349,7 +350,7 @@ describe('/POST Log user in', () => {
           .end((err, res) => {
             expect(res.body.message).equals('User Logged In Successfully');
             expect(res.body.status).equals('200');
-            done();
+            done(err);
           });
       });
     });
@@ -363,7 +364,7 @@ describe('/GET/ user profile', () => {
       .end((err, res) => {
         expect(res.body.message).equals('Auth failed');
         expect(res.status).equals(401);
-        done();
+        done(err);
       });
   });
 
@@ -374,7 +375,7 @@ describe('/GET/ user profile', () => {
       .end((err, res) => {
         expect(res.body.message).equals('User Does not exist');
         expect(res.status).equals(404);
-        done();
+        done(err);
       });
   });
 
@@ -392,7 +393,7 @@ describe('/GET/ user profile', () => {
             expect(res.body.user).to.be.an('Object');
             expect(res.status).equal(200);
             expect(res.body.message).equal('User Returned Successfully');
-            done();
+            done(err);
           });
       }
     });

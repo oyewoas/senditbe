@@ -65,7 +65,7 @@ const createUser = async (req, res) => {
       conflictExists.description = 'User with that EMAIL already exist';
       return res.status(409).send(conflictExists);
     }
-    return res.status(400).send(error);
+    // return res.status(400).send(error);
   }
 };
 
