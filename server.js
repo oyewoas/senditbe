@@ -4,14 +4,14 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import 'babel-polyfill';
 import cors from 'cors';
-// import swaggerUi from 'swagger-ui-express';
-// import YAML from 'yamljs';
-// import path from 'path';
+import swaggerUi from 'swagger-ui-express';
+import YAML from 'yamljs';
+import path from 'path';
 import router from './app/routes';
 
 const port = process.env.PORT || 4000;
 
-// const swaggerDocument = YAML.load(path.join(process.cwd(), './swagger/swagger.yaml'));
+const swaggerDocument = YAML.load(path.join(process.cwd(), './swagger/swagger.yaml'));
 
 // createAllTables();
 // dropAllTables();
@@ -24,7 +24,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
-// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 router(app);
 
 // listen for requests
