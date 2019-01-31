@@ -6,6 +6,7 @@
   "scripts": {
     "test": "mocha --compilers js:babel-core/register \"./tests/*.spec.js\" --timeout 150000",
     "create-tables": "babel-node ./app/db/db createAllTables",
+    "heroku-postbuild": "npm install --production",
     "build": "babel server.js --out-dir build",
     "dev-start": "nodemon --watch . --exec babel-node -- server.js"
   },
@@ -35,7 +36,10 @@
     "moment": "^2.23.0",
     "path": "^0.12.7",
     "pg": "^7.8.0",
-    "uuid": "^3.3.2"
+    "request": "^2.88.0",
+    "swagger-ui-express": "^4.0.2",
+    "uuid": "^3.3.2",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
