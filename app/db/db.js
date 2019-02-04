@@ -105,6 +105,7 @@ pool.on('remove', () => {
   process.exit(0);
 });
 
+
 export {
   createUsersTable,
   createParcelsTable,

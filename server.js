@@ -8,6 +8,7 @@ import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
 import path from 'path';
 import router from './app/routes';
+// import { createAllTables, dropAllTables } from './app/db/db';
 
 const port = process.env.PORT || 4000;
 
