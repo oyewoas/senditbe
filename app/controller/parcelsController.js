@@ -151,13 +151,13 @@ const cancelParcelOrder = async (req, res) => {
       notFound.description = 'Users Parcels order Not Found';
       return res.status(404).send(notFound);
     }
-    const cancelParcelReply = { status: '204', data: [] };
+    const cancelParcelReply = { status: '200', data: [] };
     const message = 'Order Cancelled';
     cancelParcelReply.data.push({
       id,
       message,
     });
-    return res.status(204).send(cancelParcelReply);
+    return res.status(200).send(cancelParcelReply);
   } catch (error) {
     return res.status(400).send(error);
   }
@@ -174,6 +174,10 @@ const updateParcelDestination = async (req, res) => {
   const { toaddress } = req.body;
   // eslint-disable-next-line camelcase
   const { user_id } = req.user;
+  if (isEmpty(toaddress)) {
+    badRequest.description = 'Parcel Destination cannot be empty';
+    return res.status(400).send(badRequest);
+  }
   const findAparcelQuery = 'SELECT * FROM parcels WHERE parcel_id=$1 AND placedby = $2';
   const updateParcelQuery =`UPDATE parcels
     SET toaddress=$1 WHERE parcel_id=$2 AND placedby = $3 returning *`;
