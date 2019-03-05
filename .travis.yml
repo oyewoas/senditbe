@@ -27,6 +27,5 @@ branches:
   only:
   - master
   - develop
-  - ft-validateadminparcel
 
 
