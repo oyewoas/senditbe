@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/oyewoas/senditdatabase.svg?branch=master)](https://travis-ci.org/oyewoas/senditdatabase)
+[![Build Status](https://travis-ci.org/oyewoas/senditdatabase.svg?branch=develop)](https://travis-ci.org/oyewoas/senditdatabase)
 
 
 
