@@ -1,7 +1,9 @@
 language: node_js
 
-node_js:
- - "node"
+node_js:  
+  - 9
+  - 10
+  - node 
 services:
  - postgresql
 addons:
@@ -16,6 +18,9 @@ after_script:
   - npm run coverage
   - npm run report-coverage
 
+cache:
+  directories:
+    - node_modules
 
 # safelist
 branches:
