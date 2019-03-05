@@ -1,3 +1,8 @@
+[![Build Status](https://travis-ci.org/oyewoas/senditdatabase.svg?branch=master)](https://travis-ci.org/oyewoas/senditdatabase)
+
+
+
+
 # senditdatabase
   Api for a courier service application that helps users deliver parcels to different destinations
 
