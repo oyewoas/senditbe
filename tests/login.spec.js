@@ -58,7 +58,7 @@ describe('/POST new user', () => {
       username: 'ayooluwa',
     };
     chai.request(server)
-      .post('/api/v1/user/signup')
+      .post('/api/v1/auth/signup')
       .send(user)
       .end((err, res) => {
         // console.log(err)
@@ -73,7 +73,7 @@ describe('/POST new user', () => {
       password: 'password',
     };
     chai.request(server)
-      .post('/api/v1/user/signup')
+      .post('/api/v1/auth/signup')
       .send(user)
       .end((err, res) => {
         expect(res.body.message).equals('Bad Request');
@@ -87,7 +87,7 @@ describe('/POST new user', () => {
       email: 'testing@gmail.com',
     };
     chai.request(server)
-      .post('/api/v1/user/signup')
+      .post('/api/v1/auth/signup')
       .send(user)
       .end((err, res) => {
         expect(res.body.message).equals('Bad Request');
@@ -103,7 +103,7 @@ describe('/POST new user', () => {
       email: '',
     };
     chai.request(server)
-      .post('/api/v1/user/signup')
+      .post('/api/v1/auth/signup')
       .send(user)
       .end((err, res) => {
         expect(res.body.message).equals('Bad Request');
@@ -119,7 +119,7 @@ describe('/POST new user', () => {
       email: '',
     };
     chai.request(server)
-      .post('/api/v1/user/signup')
+      .post('/api/v1/auth/signup')
       .send(user)
       .end((err, res) => {
         expect(res.body.message).equals('Bad Request');
@@ -135,7 +135,7 @@ describe('/POST new user', () => {
       password: '',
     };
     chai.request(server)
-      .post('/api/v1/user/signup')
+      .post('/api/v1/auth/signup')
       .send(user)
       .end((err, res) => {
         expect(res.body.message).equals('Bad Request');
@@ -152,7 +152,7 @@ describe('/POST new user', () => {
     };
     pool.query('INSERT INTO users(email, password, username) values($1, $2, $3)', ['test@gmail.com', 'password', 'ayooluwa'], () => {
       chai.request(server)
-        .post('/api/v1/user/signup')
+        .post('/api/v1/auth/signup')
         .send(user)
         .end((err, res) => {
           expect(res.body.message).equals('User Already Exists');
@@ -170,7 +170,7 @@ describe('/POST new user', () => {
       username: 'ayooluwa',
     };
     chai.request(server)
-      .post('/api/v1/user/signup')
+      .post('/api/v1/auth/signup')
       .send(user)
       .end((err, res) => {
         expect(res.body.message).equals('Invalid email or password');
@@ -186,7 +186,7 @@ describe('/POST new user', () => {
       username: 'ayooluwa',
     };
     chai.request(server)
-      .post('/api/v1/user/signup')
+      .post('/api/v1/auth/signup')
       .send(user)
       .end((err, res) => {
         expect(res.body.message).equals('Invalid email or password');
@@ -202,7 +202,7 @@ describe('/POST new user', () => {
       username: 'ayooluwa',
     };
     chai.request(server)
-      .post('/api/v1/user/signup')
+      .post('/api/v1/auth/signup')
       .send(user)
       .end((err, res) => {
         expect(res.body.message).equals('Bad Request');
@@ -218,7 +218,7 @@ describe('/POST new user', () => {
       username: 'ayooluwa',
     };
     chai.request(server)
-      .post('/api/v1/user/signup')
+      .post('/api/v1/auth/signup')
       .send(user)
       .end((err, res) => {
         expect(res.body.message).equals('User Created Successfully');
@@ -235,7 +235,7 @@ describe('/POST Log user in', () => {
       password: 'password',
     };
     chai.request(server)
-      .post('/api/v1/user/login')
+      .post('/api/v1/auth/login')
       .send(user)
       .end((err, res) => {
         // console.log(res.body);
@@ -250,7 +250,7 @@ describe('/POST Log user in', () => {
       email: 'testing@gmail.com',
     };
     chai.request(server)
-      .post('/api/v1/user/login')
+      .post('/api/v1/auth/login')
       .send(user)
       .end((err, res) => {
         // console.log(res.body);
@@ -266,7 +266,7 @@ describe('/POST Log user in', () => {
       password: '         ',
     };
     chai.request(server)
-      .post('/api/v1/user/login')
+      .post('/api/v1/auth/login')
       .send(user)
       .end((err, res) => {
         expect(res.body.message).equals('Bad Request');
@@ -281,7 +281,7 @@ describe('/POST Log user in', () => {
       password: 'password',
     };
     chai.request(server)
-      .post('/api/v1/user/login')
+      .post('/api/v1/auth/login')
       .send(user)
       .end((err, res) => {
         expect(res.body.message).equals('Bad Request');
@@ -296,7 +296,7 @@ describe('/POST Log user in', () => {
       password: 'password',
     };
     chai.request(server)
-      .post('/api/v1/user/login')
+      .post('/api/v1/auth/login')
       .send(user)
       .end((err, res) => {
         expect(res.body.message).equals('Invalid email or password');
@@ -311,7 +311,7 @@ describe('/POST Log user in', () => {
       password: 'pass',
     };
     chai.request(server)
-      .post('/api/v1/user/login')
+      .post('/api/v1/auth/login')
       .send(user)
       .end((err, res) => {
         expect(res.body.message).equals('Invalid email or password');
@@ -326,7 +326,7 @@ describe('/POST Log user in', () => {
       password: 'password',
     };
     chai.request(server)
-      .post('/api/v1/user/login')
+      .post('/api/v1/auth/login')
       .send(user)
       .end((err, res) => {
         expect(res.body.message).equals('User does not exist');
@@ -345,7 +345,7 @@ describe('/POST Log user in', () => {
       logInpassword = hash;
       pool.query('INSERT INTO users(email, password, username) values($1, $2, $3)', ['test@gmail.com', logInpassword, 'ayooluwa'], () => {
         chai.request(server)
-          .post('/api/v1/user/login')
+          .post('/api/v1/auth/login')
           .send(user)
           .end((err, res) => {
             expect(res.body.message).equals('User Logged In Successfully');
