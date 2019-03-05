@@ -4,9 +4,9 @@ import { createUser, loginUser, deleteUser,
 import verifyAuth from '../middlewares/verifyAuth';
 
 export default function route(app) {
-  app.post('/api/v1/user/signup', createUser);
+  app.post('/api/v1/auth/signup', createUser);
 
-  app.post('/api/v1/user/login', loginUser);
+  app.post('/api/v1/auth/login', loginUser);
 
   app.delete('/api/v1/user/me', verifyAuth, deleteUser);
 
