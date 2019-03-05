@@ -26,7 +26,7 @@ const createParcel = async (req, res) => {
   const { user_id } = req.user;
   if (isEmpty(parcelname) || isEmpty(weight) || isEmpty(weightmetric) || isEmpty(fromaddress) || isEmpty(toaddress)) {
     badRequest.description = 'All starred field must be filled up';
-    res.status(400).send(badRequest);
+    return res.status(400).send(badRequest);
   }
   const createParcelQuery = `INSERT INTO
       parcels ( placedby, parcelname, weight, weightmetric, senton, fromaddress, toaddress)
