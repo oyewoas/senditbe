@@ -1,6 +1,10 @@
 [![Build Status](https://travis-ci.org/oyewoas/senditdatabase.svg?branch=master)](https://travis-ci.org/oyewoas/senditdatabase)
 
+[![Build Status](https://travis-ci.org/oyewoas/senditdatabase.svg?branch=develop)](https://travis-ci.org/oyewoas/senditdatabase)
 
+
+[![Coverage Status](https://coveralls.io/repos/github/oyewoas/senditdatabase/badge.svg?branch=master)](https://coveralls.io/github/oyewoas/senditdatabase?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/oyewoas/senditdatabase/badge.svg?branch=develop)](https://coveralls.io/github/oyewoas/senditdatabase?branch=develop)
 
 
 # senditdatabase
