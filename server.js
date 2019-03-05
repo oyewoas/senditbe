@@ -30,7 +30,7 @@ router(app);
 
 // listen for requests
 const server = app.listen(port, () => {
-  console.log(`Server is listening on port ${port}`);
+  console.log(`Server is listening at this port ${port}`);
 });
 
 export default server;

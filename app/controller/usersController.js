@@ -30,11 +30,13 @@ const createUser = async (req, res) => {
   const registered = moment(new Date());
   if (isEmpty(email) || isEmpty(username) || isEmpty(password)) {
     badRequest.description = 'Email, password and username field cannot be empty';
-    res.status(400).send(badRequest);
+    return res.status(400).send(badRequest);
+    
   }
   if (!isValidEmail(email) || !validatePassword(password)) {
     badRequest.description = 'Please enter a valid Email or Password';
-    res.status(400).send(badRequest);
+    return res.status(400).send(badRequest);
+    
   }
   const hashedPassword = hashPassword(password);
   const createUserQuery = `INSERT INTO
@@ -83,7 +85,7 @@ const loginUser = async (req, res) => {
   }
   if (!isValidEmail(email) || !validatePassword(password)) {
     badRequest.description = 'Please enter a valid Email or Password';
-    res.status(400).send(badRequest);
+    return res.status(400).send(badRequest);
   }
   const loginUserQuery = 'SELECT * FROM users WHERE email = $1';
   try {

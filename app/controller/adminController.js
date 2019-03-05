@@ -31,11 +31,13 @@ const createAdmin = async (req, res) => {
   const registered = moment(new Date());
   if (isEmpty(email) || isEmpty(username) || isEmpty(password)) {
     badRequest.description = 'Email, password and username field cannot be empty';
-    res.status(400).send(badRequest);
+    return res.status(400).send(badRequest);
+    
   }
   if (!isValidEmail(email) || !validatePassword(password)) {
     badRequest.description = 'Please enter a valid Email or Password';
-    res.status(400).send(badRequest);
+    return res.status(400).send(badRequest);
+   
   }
   const hashedPassword = hashPassword(password);
   const createUserQuery = `INSERT INTO
@@ -83,10 +85,12 @@ const loginAdmin = async (req, res) => {
   if (isEmpty(email) || isEmpty(password)) {
     badRequest.description = 'Email or Password detail is missing';
     return res.status(400).send(badRequest);
+    
   }
   if (!isValidEmail(email) || !validatePassword(password)) {
     badRequest.description = 'Please enter a valid Email or Password';
-    res.status(400).send(badRequest);
+    return res.status(400).send(badRequest);
+    
   }
   const loginUserQuery = 'SELECT * FROM users WHERE email = $1 and isadmin = $2';
   try {
@@ -235,6 +239,10 @@ const updateAdminProfile = async (req, res) => {
 const updateParcelStatus = async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
+  if (isEmpty(status)) {
+    badRequest.description = 'Parcel status cannot be empty';
+    return res.status(400).send(badRequest);
+  }
   // eslint-disable-next-line camelcase
   const findAparcelQuery = 'SELECT * FROM parcels WHERE parcel_id=$1';
   const updateParcelQuery = `UPDATE parcels
@@ -278,6 +286,10 @@ const updateParcelStatus = async (req, res) => {
 const updateParcelLocation = async (req, res) => {
   const { id } = req.params;
   const { currentlocation } = req.body;
+  if (isEmpty(currentlocation)) {
+    badRequest.description = 'Current Location cannot be empty';
+    return res.status(400).send(badRequest);
+  }
   // eslint-disable-next-line camelcase
   const findAparcelQuery = 'SELECT * FROM parcels WHERE parcel_id=$1';
   const updateParcelQuery = `UPDATE parcels
