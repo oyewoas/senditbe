@@ -32,10 +32,12 @@ const createAdmin = async (req, res) => {
   if (isEmpty(email) || isEmpty(username) || isEmpty(password)) {
     badRequest.description = 'Email, password and username field cannot be empty';
     res.status(400).send(badRequest);
+    return;
   }
   if (!isValidEmail(email) || !validatePassword(password)) {
     badRequest.description = 'Please enter a valid Email or Password';
     res.status(400).send(badRequest);
+    return;
   }
   const hashedPassword = hashPassword(password);
   const createUserQuery = `INSERT INTO
@@ -83,10 +85,12 @@ const loginAdmin = async (req, res) => {
   if (isEmpty(email) || isEmpty(password)) {
     badRequest.description = 'Email or Password detail is missing';
     return res.status(400).send(badRequest);
+    return;
   }
   if (!isValidEmail(email) || !validatePassword(password)) {
     badRequest.description = 'Please enter a valid Email or Password';
     res.status(400).send(badRequest);
+    return;
   }
   const loginUserQuery = 'SELECT * FROM users WHERE email = $1 and isadmin = $2';
   try {
