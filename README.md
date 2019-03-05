@@ -17,15 +17,23 @@
   DBeaver: DBeaver is free and open source universal database tool for developers and database administrators.
   (https://dbeaver.io/download/), this is optional though, you can use any other GUI for postgreSQL.
 
-  #####.env contents :-
+  ###.env contents :-
     DATABASE_URL = "postgresql://postgres:databasepassword@localhost:5432/databasename"
+
     DB_HOST = localhost
+
     DB_PORT = 5432
+
     DB_NAME = database name
+
     DB_DIALET = postgresql
+
     DB_USER = postgres
+
     DB_PASS = databasepassword
+
     PORT = e.g 5000
+
     JWT_KEY = "secret"  
   
 
