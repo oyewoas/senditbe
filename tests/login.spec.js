@@ -31,7 +31,7 @@ const token = jwt.sign({
     email: 'test@gmail.com',
     userId: 1,
   },
-  process.env.JWT_KEY, {
+  'secret', {
     expiresIn: '1h',
   });
 beforeEach(() => {
