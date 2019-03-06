@@ -1,8 +1,8 @@
 
 [![Build Status](https://travis-ci.org/oyewoas/senditdatabase.svg?branch=develop)](https://travis-ci.org/oyewoas/senditdatabase)
-
 [![Coverage Status](https://coveralls.io/repos/github/oyewoas/senditdatabase/badge.svg?branch=develop)](https://coveralls.io/github/oyewoas/senditdatabase?branch=develop)
-
+[![Maintainability](https://api.codeclimate.com/v1/badges/0fea2c01cf42eb6943b9/maintainability)](https://codeclimate.com/github/oyewoas/senditdatabase/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/0fea2c01cf42eb6943b9/test_coverage)](https://codeclimate.com/github/oyewoas/senditdatabase/test_coverage)
 
 # senditdatabase
   Api for a courier service application that helps users deliver parcels to different destinations
